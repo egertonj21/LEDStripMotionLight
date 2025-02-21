@@ -3,7 +3,7 @@
 // Define the pin connections
 #define PIR_SENSOR_PIN D8
 #define LED_STRIP_PIN D10
-#define LIGHT_SENSOR_PIN A0
+#define LIGHT_SENSOR_PIN A0  // Analog input pin for the light sensor
 #define NUM_LEDS 28
 
 // Create an instance of the Adafruit_NeoPixel class
@@ -13,7 +13,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUM_LEDS, LED_STRIP_PIN, NEO_GRB + N
 bool motionDetected = false;
 unsigned long lastMotionTime = 0;
 const unsigned long motionTimeout = 10 * 60 * 1000; // 10 minutes in milliseconds
-const int darkThreshold = 500; // Adjust based on your light sensor and environment
+int darkThreshold = 700; // Adjust based on your light sensor and environment
 
 void setup() {
   // Initialize the PIR sensor pin as input
@@ -21,6 +21,9 @@ void setup() {
 
   // Initialize the light sensor pin as input
   pinMode(LIGHT_SENSOR_PIN, INPUT);
+
+  // Set the ADC resolution to 10-bit (0-1023 range)
+  analogReadResolution(10);
 
   // Initialize the LED strip
   strip.begin();
